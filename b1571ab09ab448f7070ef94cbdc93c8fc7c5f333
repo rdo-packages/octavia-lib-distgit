@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13b71895_10424313",
+        "filename": "python-octavia-lib.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 432
+      },
+      "writtenOn": "2019-02-07T10:20:43Z",
+      "side": 1,
+      "message": "Upstream wants to have LICENSE and README.rst files installed. Same is done in octavia and we remove the files in RDO side because we want to include the two files in the package and subpackages.\n\nhttps://github.com/rdo-packages/octavia-distgit/blob/731dc5df0fd2aacb33f27b86a753fa1899ab2c6d/openstack-octavia.spec#L423-L424",
+      "parentUuid": "aff12987_e0e8a314",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 52
+      },
+      "revId": "b1571ab09ab448f7070ef94cbdc93c8fc7c5f333",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72fe2c45_f21e33ee",
         "filename": "python-octavia-lib.spec",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-02-07T07:16:15Z",
       "side": 1,
       "message": "should use either %{buildroot} or RPM_BUILD_ROOT across spec. Fedora review is not happy with it.",
+      "range": {
+        "startLine": 112,
+        "startChar": 18,
+        "endLine": 112,
+        "endChar": 33
+      },
+      "revId": "b1571ab09ab448f7070ef94cbdc93c8fc7c5f333",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "575daefd_22848fc4",
+        "filename": "python-octavia-lib.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 432
+      },
+      "writtenOn": "2019-02-07T10:20:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72fe2c45_f21e33ee",
       "range": {
         "startLine": 112,
         "startChar": 18,
