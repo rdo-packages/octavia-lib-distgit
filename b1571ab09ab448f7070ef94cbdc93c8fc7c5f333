@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aff12987_e0e8a314",
+        "filename": "python-octavia-lib.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2019-02-07T07:16:15Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be fixed upstream by adjusting setup.cfg? or there is special need for these?",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 52
+      },
+      "revId": "b1571ab09ab448f7070ef94cbdc93c8fc7c5f333",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72fe2c45_f21e33ee",
+        "filename": "python-octavia-lib.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 403
+      },
+      "writtenOn": "2019-02-07T07:16:15Z",
+      "side": 1,
+      "message": "should use either %{buildroot} or RPM_BUILD_ROOT across spec. Fedora review is not happy with it.",
+      "range": {
+        "startLine": 112,
+        "startChar": 18,
+        "endLine": 112,
+        "endChar": 33
+      },
+      "revId": "b1571ab09ab448f7070ef94cbdc93c8fc7c5f333",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
