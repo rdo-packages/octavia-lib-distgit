@@ -52,8 +52,7 @@ BuildRequires: python%{pyver}-six
 Requires:   python%{pyver}-pbr
 Requires:   python%{pyver}-oslo-i18n >= 3.15.3
 Requires:   python%{pyver}-oslo-log >= 3.36.0
-Requires:   python%{pyver}-oslo-serialization >= 2.18.0
-Requires:   python%{pyver}-oslo-utils >= 3.33.0
+Requires:   python%{pyver}-oslo-serialization >= 2.28.1
 Requires:   python%{pyver}-six >= 1.10.0
 
 %description -n python%{pyver}-%{library}
