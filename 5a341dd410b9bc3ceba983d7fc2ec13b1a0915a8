@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb8cb458_4c9902ee",
+        "filename": "python-octavia-lib.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 128
+      },
+      "writtenOn": "2019-03-07T11:34:13Z",
+      "side": 1,
+      "message": "oslo-utils is only BR, we can clean it up.",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 47
+      },
+      "revId": "5a341dd410b9bc3ceba983d7fc2ec13b1a0915a8",
+      "serverId": "270e2033-b340-4cff-9539-693957ebf0e7",
+      "unresolved": false
+    }
+  ]
+}
