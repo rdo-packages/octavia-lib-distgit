@@ -110,7 +110,7 @@ rm -rf %{buildroot}%{_datadir}/%{library}/README.rst
 export OS_TEST_PATH='./octavia_lib/tests/unit'
 export PATH=$PATH:%{buildroot}/usr/bin
 export PYTHONPATH=$PWD
-stestr-%{pyver} --test-path $OS_TEST_PATH run
+PYTHON=%{pyver_bin} stestr-%{pyver} --test-path $OS_TEST_PATH run
 
 %files -n python%{pyver}-%{library}
 %license LICENSE
