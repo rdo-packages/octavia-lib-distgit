@@ -129,3 +129,4 @@ PYTHON=%{pyver_bin} stestr-%{pyver} --test-path $OS_TEST_PATH run
 %endif
 
 %changelog
+# REMOVEME: error caused by commit http://git.openstack.org/cgit/openstack/octavia-lib/commit/?id=43aa1c4024c109d4a1d4feff1d6ea04114b729e1
