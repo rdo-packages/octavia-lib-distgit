@@ -1,0 +1,9 @@
+Code-Review+2: Bernard Cafarelli <bcafarel@redhat.com>
+Code-Review+2: Carlos Goncalves <cgoncalves@redhat.com>
+Workflow+1: Carlos Goncalves <cgoncalves@redhat.com>
+Verified+2: Zuul CI <zuul@review.rdoproject.org>
+Submitted-by: Zuul CI <zuul@review.rdoproject.org>
+Submitted-at: Tue, 06 Aug 2019 09:51:36 +0000
+Reviewed-on: https://review.rdoproject.org/r/21709
+Project: openstack/octavia-lib-distgit
+Branch: refs/heads/rpm-master
