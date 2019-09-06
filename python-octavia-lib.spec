@@ -43,16 +43,14 @@ Summary:    OpenStack Octavia library
 # Required for tests
 BuildRequires: python%{pyver}-oslotest
 BuildRequires: python%{pyver}-stestr
-BuildRequires: python%{pyver}-testtools
 BuildRequires: python%{pyver}-oslo-i18n
-BuildRequires: python%{pyver}-oslo-log
+BuildRequires: python%{pyver}-oslo-serialization
 BuildRequires: python%{pyver}-oslo-utils
 BuildRequires: python%{pyver}-six
 BuildRequires: python%{pyver}-tenacity
 
 Requires:   python%{pyver}-pbr
 Requires:   python%{pyver}-oslo-i18n >= 3.15.3
-Requires:   python%{pyver}-oslo-log >= 3.36.0
 Requires:   python%{pyver}-oslo-serialization >= 2.28.1
 Requires:   python%{pyver}-six >= 1.10.0
 Requires:   python%{pyver}-tenacity >= 5.0.2
