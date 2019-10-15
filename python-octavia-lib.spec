@@ -76,6 +76,7 @@ Summary:    OpenStack Octavia library documentation
 BuildRequires: python%{pyver}-sphinx
 BuildRequires: python%{pyver}-openstackdocstheme
 BuildRequires: python%{pyver}-sphinxcontrib-apidoc
+BuildRequires: python%{pyver}-sphinxcontrib-rsvgconverter
 
 %description doc
 %{common_desc}
