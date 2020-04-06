@@ -109,6 +109,7 @@ rm -rf %{buildroot}%{_datadir}/%{library}/LICENSE
 rm -rf %{buildroot}%{_datadir}/%{library}/README.rst
 
 %check
+rm -f ./octavia_lib/tests/unit/hacking/test_checks.py
 export OS_TEST_PATH='./octavia_lib/tests/unit'
 export PATH=$PATH:%{buildroot}/usr/bin
 export PYTHONPATH=$PWD
