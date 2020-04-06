@@ -1,14 +1,3 @@
-# Macros for py2/py3 compatibility
-%if 0%{?fedora} || 0%{?rhel} > 7
-%global pyver %{python3_pkgversion}
-%else
-%global pyver 2
-%endif
-%global pyver_bin python%{pyver}
-%global pyver_sitelib %python%{pyver}_sitelib
-%global pyver_install %py%{pyver}_install
-%global pyver_build %py%{pyver}_build
-# End of macros for py2/py3 compatibility
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global with_doc 1
 
@@ -28,43 +17,42 @@ Source0:    https://tarballs.openstack.org/%{library}/%{library}-%{upstream_vers
 
 BuildArch:  noarch
 
-BuildRequires:  python%{pyver}-devel
-BuildRequires:  python%{pyver}-pbr
-BuildRequires:  python%{pyver}-setuptools
+BuildRequires:  python3-devel
+BuildRequires:  python3-pbr
+BuildRequires:  python3-setuptools
 BuildRequires:  git
 BuildRequires:  openstack-macros
 
 %description
 %{common_desc}
 
-%package -n  python%{pyver}-%{library}
+%package -n  python3-%{library}
 Summary:    OpenStack Octavia library
-%{?python_provide:%python_provide python%{pyver}-%{library}}
+%{?python_provide:%python_provide python3-%{library}}
 # Required for tests
-BuildRequires: python%{pyver}-oslotest
-BuildRequires: python%{pyver}-stestr
-BuildRequires: python%{pyver}-oslo-i18n
-BuildRequires: python%{pyver}-oslo-serialization
-BuildRequires: python%{pyver}-oslo-utils
-BuildRequires: python%{pyver}-six
-BuildRequires: python%{pyver}-tenacity
+BuildRequires: python3-oslotest
+BuildRequires: python3-stestr
+BuildRequires: python3-oslo-i18n
+BuildRequires: python3-oslo-serialization
+BuildRequires: python3-oslo-utils
+BuildRequires: python3-six
+BuildRequires: python3-tenacity
 
-Requires:   python%{pyver}-pbr
-Requires:   python%{pyver}-oslo-i18n >= 3.15.3
-Requires:   python%{pyver}-oslo-serialization >= 2.28.1
-Requires:   python%{pyver}-six >= 1.10.0
-Requires:   python%{pyver}-tenacity >= 5.0.2
+Requires:   python3-pbr
+Requires:   python3-oslo-i18n >= 3.15.3
+Requires:   python3-oslo-serialization >= 2.28.1
+Requires:   python3-tenacity >= 5.0.2
 
-%description -n python%{pyver}-%{library}
+%description -n python3-%{library}
 %{common_desc}
 
 
-%package -n python%{pyver}-%{library}-tests
+%package -n python3-%{library}-tests
 Summary:    OpenStack Octavia library tests
-%{?python_provide:%python_provide python%{pyver}-%{library}-tests}
-Requires:   python%{pyver}-%{library} = %{version}-%{release}
+%{?python_provide:%python_provide python3-%{library}-tests}
+Requires:   python3-%{library} = %{version}-%{release}
 
-%description -n python%{pyver}-%{library}-tests
+%description -n python3-%{library}-tests
 %{common_desc}
 
 This package contains the Octavia library test files.
@@ -73,10 +61,10 @@ This package contains the Octavia library test files.
 %package doc
 Summary:    OpenStack Octavia library documentation
 
-BuildRequires: python%{pyver}-sphinx
-BuildRequires: python%{pyver}-openstackdocstheme
-BuildRequires: python%{pyver}-sphinxcontrib-apidoc
-BuildRequires: python%{pyver}-sphinxcontrib-rsvgconverter
+BuildRequires: python3-sphinx
+BuildRequires: python3-openstackdocstheme
+BuildRequires: python3-sphinxcontrib-apidoc
+BuildRequires: python3-sphinxcontrib-rsvgconverter
 
 %description doc
 %{common_desc}
@@ -91,18 +79,18 @@ This package contains the documentation.
 %py_req_cleanup
 
 %build
-%{pyver_build}
+%{py3_build}
 
 %if 0%{?with_doc}
 # generate html docs
 export PYTHONPATH=.
-sphinx-build-%{pyver} -b html doc/source doc/build/html
+sphinx-build-3 -b html doc/source doc/build/html
 # remove the sphinx-build leftovers
 rm -rf doc/build/html/.{doctrees,buildinfo}
 %endif
 
 %install
-%{pyver_install}
+%{py3_install}
 
 # Remove setuptools installed data_files
 rm -rf %{buildroot}%{_datadir}/%{library}/LICENSE
@@ -113,17 +101,17 @@ rm -f ./octavia_lib/tests/unit/hacking/test_checks.py
 export OS_TEST_PATH='./octavia_lib/tests/unit'
 export PATH=$PATH:%{buildroot}/usr/bin
 export PYTHONPATH=$PWD
-PYTHON=%{pyver_bin} stestr-%{pyver} --test-path $OS_TEST_PATH run
+PYTHON=python3 stestr-3 --test-path $OS_TEST_PATH run
 
-%files -n python%{pyver}-%{library}
+%files -n python3-%{library}
 %license LICENSE
-%{pyver_sitelib}/%{module}
-%{pyver_sitelib}/%{module}-*.egg-info
-%exclude %{pyver_sitelib}/%{module}/tests
+%{python3_sitelib}/%{module}
+%{python3_sitelib}/%{module}-*.egg-info
+%exclude %{python3_sitelib}/%{module}/tests
 
-%files -n python%{pyver}-%{library}-tests
+%files -n python3-%{library}-tests
 %license LICENSE
-%{pyver_sitelib}/%{module}/tests
+%{python3_sitelib}/%{module}/tests
 
 %if 0%{?with_doc}
 %files doc
