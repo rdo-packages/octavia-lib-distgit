@@ -1,5 +1,5 @@
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
-%global sources_gpg_sign 0x2426b928085a020d8a90d0d879ab7008d0896c8a
+%global sources_gpg_sign 0x01527a34f0d0080f8a5db8d6eb6c5df21b4b6363
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 %global with_doc 1
 
@@ -9,8 +9,8 @@
 %global common_desc A library to support Octavia provider drivers.
 
 Name:       python-%{library}
-Version:    XXX
-Release:    XXX
+Version:    2.5.0
+Release:    1%{?dist}
 Summary:    OpenStack Octavia library
 License:    ASL 2.0
 URL:        https://docs.openstack.org/octavia-lib/
@@ -136,3 +136,6 @@ PYTHON=python3 stestr-3 --test-path $OS_TEST_PATH run
 %endif
 
 %changelog
+* Mon Mar 14 2022 RDO <dev@lists.rdoproject.org> 2.5.0-1
+- Update to 2.5.0
+
