@@ -1,6 +1,12 @@
 %{!?sources_gpg: %{!?dlrn:%global sources_gpg 1} }
 %global sources_gpg_sign 0x2426b928085a020d8a90d0d879ab7008d0896c8a
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
+# we are excluding some BRs from automatic generator
+%global excluded_brs doc8 bandit pre-commit hacking flake8-import-order
+# Exclude sphinx from BRs if docs are disabled
+%if ! 0%{?with_doc}
+%global excluded_brs %{excluded_brs} sphinx openstackdocstheme
+%endif
 %global with_doc 1
 
 %global library octavia-lib
@@ -12,7 +18,7 @@ Name:       python-%{library}
 Version:    XXX
 Release:    XXX
 Summary:    OpenStack Octavia library
-License:    ASL 2.0
+License:    Apache-2.0
 URL:        https://docs.openstack.org/octavia-lib/
 
 Source0:    https://tarballs.openstack.org/%{library}/%{library}-%{upstream_version}.tar.gz
@@ -30,8 +36,7 @@ BuildRequires:  /usr/bin/gpgv2
 %endif
 
 BuildRequires:  python3-devel
-BuildRequires:  python3-pbr
-BuildRequires:  python3-setuptools
+BuildRequires:  pyproject-rpm-macros
 BuildRequires:  git-core
 BuildRequires:  openstack-macros
 
@@ -40,28 +45,12 @@ BuildRequires:  openstack-macros
 
 %package -n  python3-%{library}
 Summary:    OpenStack Octavia library
-%{?python_provide:%python_provide python3-%{library}}
-# Required for tests
-BuildRequires: python3-oslotest
-BuildRequires: python3-stestr
-BuildRequires: python3-oslo-i18n
-BuildRequires: python3-oslo-serialization
-BuildRequires: python3-oslo-utils
-BuildRequires: python3-six
-BuildRequires: python3-tenacity
-
-Requires:   python3-pbr
-Requires:   python3-oslo-i18n >= 3.15.3
-Requires:   python3-oslo-serialization >= 2.28.1
-Requires:   python3-tenacity >= 5.0.2
-
 %description -n python3-%{library}
 %{common_desc}
 
 
 %package -n python3-%{library}-tests
 Summary:    OpenStack Octavia library tests
-%{?python_provide:%python_provide python3-%{library}-tests}
 Requires:   python3-%{library} = %{version}-%{release}
 
 %description -n python3-%{library}-tests
@@ -72,11 +61,6 @@ This package contains the Octavia library test files.
 %if 0%{?with_doc}
 %package doc
 Summary:    OpenStack Octavia library documentation
-
-BuildRequires: python3-sphinx
-BuildRequires: python3-openstackdocstheme
-BuildRequires: python3-sphinxcontrib-apidoc
-BuildRequires: python3-sphinxcontrib-rsvgconverter
 
 %description doc
 %{common_desc}
@@ -91,22 +75,42 @@ This package contains the documentation.
 %endif
 %autosetup -n %{library}-%{upstream_version} -S git
 
-# Let's handle dependencies ourseleves
-%py_req_cleanup
+
+sed -i /^[[:space:]]*-c{env:.*_CONSTRAINTS_FILE.*/d tox.ini
+sed -i "s/^deps = -c{env:.*_CONSTRAINTS_FILE.*/deps =/" tox.ini
+sed -i /^minversion.*/d tox.ini
+sed -i /^requires.*virtualenv.*/d tox.ini
+
+# Exclude some bad-known BRs
+for pkg in %{excluded_brs}; do
+  for reqfile in doc/requirements.txt test-requirements.txt; do
+    if [ -f $reqfile ]; then
+      sed -i /^${pkg}.*/d $reqfile
+    fi
+  done
+done
+
+# Automatic BR generation
+%generate_buildrequires
+%if 0%{?with_doc}
+  %pyproject_buildrequires -t -e %{default_toxenv},docs
+%else
+  %pyproject_buildrequires -t -e %{default_toxenv}
+%endif
 
 %build
-%{py3_build}
+%pyproject_wheel
 
 %if 0%{?with_doc}
 # generate html docs
 export PYTHONPATH=.
-sphinx-build-3 -b html doc/source doc/build/html
+%tox -e docs
 # remove the sphinx-build leftovers
 rm -rf doc/build/html/.{doctrees,buildinfo}
 %endif
 
 %install
-%{py3_install}
+%pyproject_install
 
 # Remove setuptools installed data_files
 rm -rf %{buildroot}%{_datadir}/%{library}/LICENSE
@@ -115,14 +119,12 @@ rm -rf %{buildroot}%{_datadir}/%{library}/README.rst
 %check
 rm -f ./octavia_lib/tests/unit/hacking/test_checks.py
 export OS_TEST_PATH='./octavia_lib/tests/unit'
-export PATH=$PATH:%{buildroot}/usr/bin
-export PYTHONPATH=$PWD
-PYTHON=python3 stestr-3 --test-path $OS_TEST_PATH run
+%tox -e %{default_toxenv}
 
 %files -n python3-%{library}
 %license LICENSE
 %{python3_sitelib}/%{module}
-%{python3_sitelib}/%{module}-*.egg-info
+%{python3_sitelib}/%{module}-*.dist-info
 %exclude %{python3_sitelib}/%{module}/tests
 
 %files -n python3-%{library}-tests
