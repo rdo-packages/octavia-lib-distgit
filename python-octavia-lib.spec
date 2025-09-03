@@ -142,3 +142,4 @@ export OS_TEST_PATH='./octavia_lib/tests/unit'
 %endif
 
 %changelog
+# REMOVEME: error caused by commit https://opendev.org/openstack/octavia-lib/commit/5b77739e7924435f38d8d419fd67c5fa9b640f2c
